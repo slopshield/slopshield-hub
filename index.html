@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlopShield Hub — community-curatie tegen AI-slop</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site">
+  <div class="brand"><span class="mark">▣</span> SLOPSHIELD <span class="hub">HUB</span></div>
+  <nav>
+    <a href="#waarom" class="on">Waarom</a>
+    <a href="#lijst">De lijst</a>
+    <a href="#cureren">Cureren</a>
+    <a href="#uploaden">Uploaden</a>
+    <a href="#appeal">Appeal</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Jouw feed.<br>Niet die van de machines.</h1>
+  <p class="sub">Een community-gecureerde blocklist van AI-slopkanalen — door mensen beoordeeld, met beroepsrecht voor makers, en met één klik te laden in de SlopShield-extensie.</p>
+  <div class="tally" id="tally">
+    <div class="t"><b id="sListed">–</b><span>op de lijst</span></div>
+    <div class="t"><b id="sPending">–</b><span>in de wachtrij</span></div>
+    <div class="t"><b id="sAppeals">–</b><span>lopende appeals</span></div>
+    <div class="t"><b id="sVotes">–</b><span>stemmen uitgebracht</span></div>
+  </div>
+</section>
+
+<main>
+<section id="waarom" class="block">
+  <h2>Waarom AI-slop een echt probleem is</h2>
+  <p>AI-slop is massaal gegenereerde content zonder menselijke zorg erachter: eindeloze stromen synthetische video's, geoptimaliseerd voor het algoritme in plaats van voor jou. Het probleem is niet dat AI eraan te pas kwam — het probleem is het businessmodel erachter.</p>
+  <p><strong>Het verdringt menselijke makers.</strong> Een slopfarm produceert tegen vrijwel nul kosten honderden video's per week. Een echte maker kan dat tempo nooit bijbenen, en het aanbevelingsalgoritme ziet alleen kliks — niet kwaliteit. Elk uur kijktijd dat naar slop gaat, gaat niet naar iemand die er moeite voor deed.</p>
+  <p><strong>Het ondermijnt vertrouwen.</strong> Nepgebeurtenissen, nepmensen, nepgeschiedenis — vaak zonder het verplichte AI-label. Hoe meer slop, hoe minder je überhaupt nog kunt geloven wat je ziet, ook als het wél echt is.</p>
+  <p><strong>Het richt zich op de kwetsbaarsten.</strong> De grootste slopcategorieën mikken op jonge kinderen (nep-CocoMelons) en ouderen — publiek dat het verschil niet ziet, gemonetiseerd door anonieme operators die "$8M/maand met AI" als verdienmodel verkopen.</p>
+  <p><strong>Daarom dit project:</strong> platforms handhaven traag, maar wij kunnen onze eigen feeds nú schoonmaken — samen, transparant, en met een eerlijke beroepsprocedure voor wie er onterecht op staat. Geen heksenjacht: alleen kanaal-handles, nooit persoonsgegevens, en elke vermelding kan worden aangevochten.</p>
+</section>
+
+<section id="lijst" class="block">
+  <h2>De lijst</h2>
+  <p>Dit is de gepubliceerde blocklist. In SlopShield laad je hem met één keer instellen: <em>Options → Subscribed lists</em> → plak de URL hieronder → Subscribe. Daarna synchroniseert de extensie automatisch elke 6 uur, of direct via de "Sync nu"-knop in de popup.</p>
+  <div class="copyrow">
+    <code id="listUrl">…/api/list.json</code>
+    <button id="copyUrl">Kopieer URL</button>
+    <a id="downloadList" href="/api/list.json" download="slopshield-community-list.json"><button>Download JSON</button></a>
+  </div>
+  <div id="listTable" class="entries"></div>
+</section>
+
+<section id="cureren" class="block">
+  <h2>Curatiewachtrij</h2>
+  <p>Iedere inzending wordt door de community beoordeeld: <strong>+<span class="promoteAt">5</span> netto "slop"-stemmen → op de lijst</strong>, −<span class="promoteAt">5</span> → afgewezen. Items met een <span class="tagappeal">APPEAL</span>-label zijn kanalen waarvan de eigenaar verwijdering vraagt — lees de motivatie en stem opnieuw: haalt het −<span class="promoteAt">5</span>, dan gaat het kanaal van de lijst. Eén stem per item per persoon.</p>
+  <div id="queue" class="entries"></div>
+</section>
+
+<section id="uploaden" class="block">
+  <h2>Uploaden vanuit SlopShield</h2>
+  <p>Exporteer in de extensie je blocklist of submissions (popup → Blocklist → "Export list", of Submit → "Export submissions") en sleep het JSON-bestand hierheen. Duplicaten — kanalen die al op de lijst, in de wachtrij of eerder afgewezen zijn — worden automatisch overgeslagen.</p>
+  <div id="drop" class="drop">Sleep je JSON hierheen of klik om te kiezen
+    <input type="file" id="fileInput" accept="application/json" hidden>
+  </div>
+  <div class="manual">
+    <h3>Of voeg één kanaal toe</h3>
+    <div class="formrow">
+      <select id="mPlatform">
+        <option value="youtube">YouTube</option><option value="x">X</option>
+        <option value="tiktok">TikTok</option><option value="instagram">Instagram</option>
+        <option value="facebook">Facebook</option>
+      </select>
+      <input id="mHandle" placeholder="@handle">
+      <input id="mReason" placeholder="Waarom is dit slop? (één zin)">
+      <button id="mSubmit">Indienen</button>
+    </div>
+  </div>
+  <p id="uploadResult" class="result"></p>
+</section>
+
+<section id="appeal" class="block appealblock">
+  <h2>Appeal — sta je hier onterecht op?</h2>
+  <p>Ben jij eigenaar van een kanaal op deze lijst en vind je dat onterecht? Dien een appeal in. Je kanaal komt dan <strong>opnieuw in de curatiewachtrij</strong>, mét jouw motivatie erbij, en de community stemt opnieuw met frisse ogen. Oordeelt de meerderheid dat het geen slop is, dan wordt je kanaal verwijderd uit de lijst en uit de eerstvolgende sync van alle abonnees.</p>
+  <div class="formrow">
+    <select id="aPlatform">
+      <option value="youtube">YouTube</option><option value="x">X</option>
+      <option value="tiktok">TikTok</option><option value="instagram">Instagram</option>
+      <option value="facebook">Facebook</option>
+    </select>
+    <input id="aHandle" placeholder="@jouwhandle">
+  </div>
+  <textarea id="aMotivation" rows="4" placeholder="Jouw motivatie: leg uit waarom je content geen slop is — bijvoorbeeld hoe het gemaakt wordt, welke menselijke arbeid erin zit, of dat je AI-gebruik gelabeld is. Dit lezen de stemmers."></textarea>
+  <button id="aSubmit">Appeal indienen</button>
+  <p id="appealResult" class="result"></p>
+</section>
+</main>
+
+<footer>
+  <p>SlopShield Hub · community-gedreven · alleen kanaal-handles, nooit persoonsgegevens · elke vermelding is aanvechtbaar via appeal</p>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
