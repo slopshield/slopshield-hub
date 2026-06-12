@@ -1,0 +1,5 @@
+node_modules/
+hub.db
+hub.db-wal
+hub.db-shm
+.env
